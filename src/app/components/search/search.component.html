@@ -1,0 +1,88 @@
+<form action="" class="search-from"> 
+ <div>
+    <label for="site-search" >Search from GitHub:</label>
+    <input type="search" class="form-control" placeholder="Search users from GitHub using username" 
+    [(ngModel)] = "username" name = "username" (keyup) = "searchProfile()">
+ </div>
+</form>
+
+
+<div *ngIf = "profile">
+ <div class="panel panel-default">
+      <div class="panel panel-primary badge badge-secondary" >
+         {{profile.name}}
+         <small>
+             ({{profile.login}})
+         </small>
+          <span *ngIf = "profile.company" >Works at :  {{profile.company}} </span>
+          {{profile.location}}
+      </div>
+     <div class="panel-body"> 
+       <div class="row">
+            <div class="col">
+              <div class="col-sm-4" onload="InitDemo();" >
+                 <canvas id="webgl-canvas" width="600" height="700">
+                    Your browser don't support webGL
+                 <img src="{{profile.avatar_url}}" alt="user's avatar" >
+                 </canvas>
+                 <script src="gl-matrix.js"></script>
+                 <script src="webgl.js"></script>
+               </div>
+               <div class="col-sm-5"> 
+                  <ul class="list-group">
+                    <li class="list-group-item" *ngIf = "profile.bio"> 
+                       {{profile.bio}}
+                     </li>
+                    <li class="list-group-item" *ngIf = "profile.hirable"> 
+                      Available for hire 
+                   </li>
+                    <li class="list-group-item" *ngIf = "profile.blog"> 
+                      <a href='{{profile.blog}}' >{{profile.blog}}</a>
+                     </li>
+                    <li class="list-group-item" *ngIf = "profile.email"> 
+                      <a href=  'emailto:{{profile.email}}'>{{profile.email}}</a>
+                    </li>
+                   </ul>
+             </div>
+
+             </div>
+             <div class="col-sm-5"> 
+                <p> 
+                   <span class="badge badge-secondary"> {{profile.followers}} Followers </span>
+                    &nbsp;
+                    <span class="badge badge-primary"> Following {{profile.following}} </span>
+                    &nbsp;
+                    <span class="badge badge-success"> {{profile.public_gists}} Public gists </span>
+                    &nbsp;
+                    <span class="badge badge-info"> {{profile.public_repos}} Public repos </span>
+                </p>
+                <p>
+                    <a href='{{profile.html_url}}' class="btn btn-success btn-sm"> View profile on gitHub </a>
+                </p> 
+             
+                <div class="panel panel-default" >
+                  
+                    <div class="panel-info">
+                       <ul class="list-group">
+                         <li class="list-group-item">
+                            <h3 class="panel-title"> Repos</h3>
+                          </li>
+                       </ul>
+                   </div>
+                    <div class="panel-body"  *ngFor = "let repo of repos ">
+                        <ul class="list-group"> 
+                           <li class="fas fa-code list-group-item">
+                           {{repo.name}} <br>
+                           <a href ='{{repo.html_url}}' class="btn btn-warning pull-right">View this project on GitHub</a>
+                          </li>
+                          <li class="fas fa-code list-group-item" *ngIf = "repo.description">
+                           <p > description : {{repo.description}} </p>
+                          </li>
+                        </ul>    
+                    </div>
+                  </div>
+             </div>
+          </div>  
+       </div>
+   </div>
+</div>
